@@ -110,6 +110,12 @@
       }
     });
 
+	this.el.dblclick(function () {
+      if (typeof opts.ondblclick === 'function') {
+        opts.ondblclick(thisnode);
+      }
+	});
+
     this.el.click(function () {
       if (obj.activeNode) {
         obj.activeNode.el.removeClass('active');
