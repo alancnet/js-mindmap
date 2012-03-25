@@ -1,5 +1,8 @@
 // load the mindmap
 $(document).ready(function() {
+
+    var selectedNode = null;
+
     // enable the mindmap in the body
     $('body').mindmap();
     $(".details").ndialog();
@@ -27,31 +30,41 @@ $(document).ready(function() {
 
     var updateInfoWithNode = function(window, node) {
         // TODO: Move this to widget
+        selectedNode = node;
         $(window).attr("title", node.name);
+        $("#ui-dialog-title-details").text(node.name);
 
-        $(window).ndialog("option", "node", node);
-    }
+       var name_field = $("#edit_node .name");
+       name_field.val(selectedNode.name);
+    };
+
+    var saveHandler = function(){
+       var name_field = $("#edit_node .name");
+       selectedNode.updateAttributes({name: name_field.val()});
+        return false;
+    };
 
     var removeHandler = function() {
-        var dialog = $(this).parents(".details")
-        var node = dialog.ndialog("option", "node");
+        var node = selectedNode;
         var parent = node.parent;
         node.removeNode();
         $(parent.el).click();
+        selectedNode = null;
+        return false;
     };
 
     var addChildHandler = function() {
-
-        dialog = $(this).parents(".details")
-        node = dialog.ndialog("option", "node");
-        name = $(".name", dialog).val();
-        $(".name", dialog).val("").focus();
+        node = selectedNode;
+        var name_field =  $("#add_child_form .name");
+        name = name_field.val();
+        name_field.val("").focus();
         addNode(node, name, {});
         return false;
     }
 
-    $(".details .add_child").click(addChildHandler);
+    $("#add_child_form button:first").click(addChildHandler);
     $(".details .remove").click(removeHandler);
+    $("#edit_node button:first").click(saveHandler);
 
     var addNode = function(parentnode, text) {
         return $('body').addNode(parentnode, text, {
@@ -63,6 +76,7 @@ $(document).ready(function() {
             },
 
             onclick:function(node) {
+                 updateInfoWithNode($("#details"), node);
                 presentNode(node);
             }
         });
