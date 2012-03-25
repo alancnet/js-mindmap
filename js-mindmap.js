@@ -64,7 +64,8 @@
   Node = function (obj, name, parent, opts) {
     this.obj = obj;
     this.options = obj.options;
-
+    this.id = 1;
+    this.description = "...";
     this.name = name;
     this.href = opts.href;
     if (opts.url) {
@@ -116,6 +117,7 @@
       }
 	});
 
+
     this.el.click(function () {
       if (obj.activeNode) {
         obj.activeNode.el.removeClass('active');
@@ -136,6 +138,9 @@
     });
 
   };
+  Node.prototype.presentNode = function(){
+
+  }
 
   // ROOT NODE ONLY:  control animation loop
   Node.prototype.animateToStatic = function () {
@@ -463,11 +468,9 @@
   };
 
   $.fn.removeNode = function (name) {
-    return this.each(function () {
-//      if (!!this.mindmapInit) return false;
-      //remove a node matching the anme
-//      alert(name+' removed');
-    });
+    console.log("remove Node");
+    var obj = this[0];
+      console.log(obj.nodes);
   };
 
   $.fn.mindmap = function (options) {
