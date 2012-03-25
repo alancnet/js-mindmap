@@ -36,11 +36,14 @@ $(document).ready(function() {
 
        var name_field = $("#edit_node .name");
        name_field.val(selectedNode.name);
+       var color_field = $("#edit_node .color");
+       color_field.val(selectedNode.color);
     };
 
     var saveHandler = function(){
        var name_field = $("#edit_node .name");
-       selectedNode.updateAttributes({name: name_field.val()});
+        var color_field = $("#edit_node .color");
+       selectedNode.updateAttributes({name: name_field.val(), color: color_field.val()});
         return false;
     };
 

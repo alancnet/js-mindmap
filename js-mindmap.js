@@ -54,6 +54,7 @@
 
 (function ($) {
     'use strict';
+    var DEFAULT_COLOR = "#FF0000";
 
     var TIMEOUT = 4,  // movement timeout in seconds
         CENTRE_FORCE = 3,  // strength of attraction to the centre by the active node
@@ -67,6 +68,7 @@
         this.id = 1;
         this.description = "...";
         this.name = name;
+        this.color = DEFAULT_COLOR;
         this.href = opts.href;
         if (opts.url) {
             this.url = opts.url;
@@ -146,11 +148,17 @@
         if (attrs.name.length > 0) {
             this.name = attrs.name;
         }
+        if (attrs.color.length > 0) {
+            this.color = attrs.color;
+        }
         this.updateElement();
     };
 
     Node.prototype.updateElement = function() {
         this.el.text(this.name);
+        console.log("rrr");
+        console.log(this.color);
+        this.el.css('background', this.color);
     };
 
     Node.prototype.presentNode = function() {
