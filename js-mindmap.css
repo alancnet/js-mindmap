@@ -60,3 +60,16 @@ body {
   text-align:center;
   vertical-align:super;
 }
+
+.simpleColorDisplay{
+  float:left;
+}
+
+#add_child_form{
+  padding-bottom: 85px;
+  padding-top: 10px;
+}
+
+.remove{
+  float: right;
+}

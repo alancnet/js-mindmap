@@ -75,7 +75,9 @@ $(document).ready(function() {
             href:'/',
             ondblclick:function(node) {
                 updateInfoWithNode($("#details"), node);
-                $("#details").dialog({resizable:true, height : screen.height * 0.45, width : screen.width * 0.25 })
+                $("#details")
+				.dialog({resizable:false, height : screen.height * 0.45, width : screen.width * 0.35 })
+				 $("#details").parent().css("left", (screen.width * 0.64)+"px").css("top", "0px")
             },
 
             onclick:function(node) {
