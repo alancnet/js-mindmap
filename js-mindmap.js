@@ -66,18 +66,20 @@
     this.options = obj.options;
 
     this.href = opts.href;
- if(opts.rel != undefined){
-		this.rel = opts.rel;
-		//console.log(opts.rel);
+    if(opts.rel != undefined){ 
+		this.rel = opts.rel; // if there is an opts.rel, set it to the this scope.
+		
 	}
     if (opts.url) {
       this.url = opts.url;
     }
 	if(this.rel != '' && this.rel!=undefined){
+		//provided you have the url of the background image set in the rel attrib of your anchor tag, you can use it as the bg image of the link.
 		this.icon = 'background:url('+this.rel+') top center no-repeat;';
 	}
 
     // create the element for display
+	// note, the style attrib loads the image here using the this.icon. The width/height is arbitrary, and can be removed her and placed in your stylesheet.
     this.el = $('<a href="' + this.href + '" id="' + this.name + '" style="'+this.icon+' width:70px; height:100px; padding-top:70px;">' + this.name + ' '+'</a>').addClass('node');
     $('body').prepend(this.el);
 
