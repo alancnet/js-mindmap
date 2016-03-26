@@ -7,6 +7,7 @@ $(document).ready(function() {
   var root = $('body>ul>li').get(0).mynode = $('body').addRootNode($('body>ul>li>a').text(), {
     href:'/',
     url:'/',
+    rel:'http://new.powersimple.net/wp-content/uploads/pslogo1-70x70.png', // set the rel attribe for the home node to the icon, set on page load.
     onclick:function(node) {
       $(node.obj.activeNode.content).each(function() {
         this.hide();
@@ -22,6 +23,7 @@ $(document).ready(function() {
     this.mynode = $('body').addNode(parentnode, $('a:eq(0)',this).text(), {
 //          href:$('a:eq(0)',this).text().toLowerCase(),
       href:$('a:eq(0)',this).attr('href'),
+      rel:$('a:eq(0)',this).attr('rel'), // set the rell to the local icon for this node by getting the attrib of the tag.
       onclick:function(node) {
         $(node.obj.activeNode.content).each(function() {
           this.hide();
