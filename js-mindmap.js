@@ -51,7 +51,6 @@
     - themes
 
 */
-
 (function ($) {
   'use strict';
 
@@ -70,9 +69,8 @@
     if (opts.url) {
       this.url = opts.url;
     }
-
     // create the element for display
-    this.el = $('<a href="' + this.href + '">' + this.name + '</a>').addClass('node');
+    this.el = $('<a href="" data-videoid="' + this.href + '">' + this.name + '</a>').addClass('node');
     $('body').prepend(this.el);
 
     if (!parent) {
@@ -169,13 +167,35 @@
   // find the right position for this node
   Node.prototype.findEquilibrium = function () {
     var i, len, stable = true;
+    /*
+if (this.obj.activeNode !== this && this.obj.activeNode !== this.parent && this.obj.activeNode.parent !== this) {
+        console.log(this);
+        hide_rec(this);
+      //hide all children and itself
+        return true;
+    }
+*/
     stable = this.display() && stable;
-    for (i = 0, len = this.children.length; i < len; i++) {
+    if(true){
+      for (i = 0, len = this.children.length; i < len; i++) {
       stable = this.children[i].findEquilibrium() && stable;
+      }
     }
     return stable;
   };
+  function hide_rec(node){
+    /* console.log(node); */
+    
+    node.el.hide();
+    node.visible = false;
+    var i =0;
+    var len=0;
+    for (i = 0, len = node.children.length; i < len; i++) {
+      hide_rec(node.children[i]);
+    }
 
+  }
+ 
   //Display this node, and its children
   Node.prototype.display = function (depth) {
     var parent = this,
@@ -190,6 +210,7 @@
         // TODO hide me!
         this.el.hide();
         this.visible = false;
+        return false; //hinzugefügt
       }
     } else {
       if (this.obj.activeNode === this || this.obj.activeNode === this.parent || this.obj.activeNode.parent === this) {
@@ -197,6 +218,11 @@
         this.visible = true;
       }
     }
+    if(this.visible ==false)  return false;
+    
+/*
+    console.log(this.visible);
+*/
     this.drawn = true;
     // am I positioned?  If not, position me.
     if (!this.hasPosition) {
@@ -349,7 +375,7 @@
           xsign = x1 / Math.abs(x1);
         }
         // force is based on radial distance
-        f = (this.options.attract * dist) / 10000;
+        f = (this.options.attract * dist) / 30000;
         fx += f * Math.cos(theta) * xsign;
         fy += f * Math.sin(theta) * xsign;
       }
@@ -445,7 +471,7 @@
   $.fn.addNode = function (parent, name, options) {
     var obj = this[0],
       node = obj.nodes[obj.nodes.length] = new Node(obj, name, parent, options);
-    console.log(obj.root);
+    //console.log(obj.root);
     obj.root.animateToStatic();
     return node;
   };
@@ -467,7 +493,7 @@
   $.fn.mindmap = function (options) {
     // Define default settings.
     options = $.extend({
-      attract: 15,
+      attract: 15, //attract: 15,
       repulse: 6,
       damping: 0.55,
       timeperiod: 10,
@@ -477,10 +503,10 @@
         y: -1
       },
       canvasError: 'alert',
-      minSpeed: 0.05,
-      maxForce: 0.1,
+      minSpeed: 0.05, //minSpeed: 0.05,
+      maxForce: 0.1, //maxForce: 0.1,
       showSublines: false,
-      updateIterationCount: 20,
+      updateIterationCount: 20, //updateIterationCount: 20,
       showProgressive: true,
       centreOffset: 100,
       timer: 0
@@ -517,6 +543,7 @@
       $(this).addClass('js-mindmap-active');
 
       // Add keyboard support (thanks to wadefs)
+/*
       $(this).keyup(function (event) {
         var newNode, i, activeParent = mindmap.activeNode.parent;
         switch (event.which) {
@@ -578,6 +605,7 @@
         }
         return false;
       });
+*/
 
     });
   };
